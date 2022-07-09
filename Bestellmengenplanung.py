@@ -11,6 +11,7 @@ class Bestellmengenplanung:
     def optBestellmenge(self):
         return math.sqrt((2 * self.nachfrage * self.kostenProBestellung) / self.lagerkostenProMengeundZeiteinheit)
 
+    technology
     def anzBestellungenProJahr(self):
         return self.nachfrage/self.optBestellmenge()
 
