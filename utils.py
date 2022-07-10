@@ -1,3 +1,6 @@
+import numpy
+import numpy as np
+
 nachkommaStellen = 4
 zwischenergebnisRunden = False
 
@@ -7,5 +10,13 @@ def runden(x, zwischenergebnis = False):
     else:
         return x
 
+def createEmptyArray(length):
+    x = np.asarray([])
+    for i in range(length):
+        x=np.append(x, np.nan)
+    return x
+
+
 if __name__ == '__main__':
-    print(runden(4.4354352435))
+    x = np.asarray([1,numpy.nan,4])
+    print(np.isnan(x[1]))
