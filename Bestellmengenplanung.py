@@ -9,7 +9,6 @@ class Bestellmengenplanung:
         self.bestellkosten = bestellkosten
         #nachfrage= d
         self.nachfrage = nachfrage
-        self.calculateAll()
 
     def optBestellmenge(self, printOut = 1):
         erg= math.sqrt((2 * self.nachfrage * self.bestellkosten) / self.lagerkosten)
