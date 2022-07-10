@@ -2,11 +2,6 @@ import sys
 
 import numpy as np
 
-
-def calculateGesamtkosten(originalMatrix, erg):
-    return np.matmul(originalMatrix,erg.T).diagonal().sum()
-
-
 class VogelscheApproximationsmethode:
 
     def __init__(self, matrix, angebot, nachfrage):
@@ -31,17 +26,12 @@ class VogelscheApproximationsmethode:
         if np.shape(self.matrix)[1] == 1:
             for i in range(len(self.angebot)):
                 erg[int(str(grid[i][0]).split('.')[0])][int(str(grid[i][0]).split('.')[1])]=min(self.angebot[i], self.nachfrage[0])
-            print(f'erg Matrix:')
-            print(erg)
-            print(f'Gesamtkosten:')
-            print(f'F={calculateGesamtkosten(originalMatrix, erg)}')
+            calculateGesamtkosten(originalMatrix, erg)
         elif np.shape(self.matrix)[0] == 1:
             for i in range(len(self.nachfrage)):
                 erg[int(str(grid[i][0]).split('.')[0])][int(str(grid[i][0]).split('.')[1])]=min(self.angebot[0], self.nachfrage[i])
-            print(f'erg Matrix:')
-            print(erg)
-            print(f'Gesamtkosten:')
-            print(f'F={calculateGesamtkosten(originalMatrix, erg)}')
+            calculateGesamtkosten(originalMatrix, erg)
+
         else:
             argmaxDeltaI = np.argmax(self.calculateDelt('i'))
             argmaxDeltaJ = np.argmax(self.calculateDelt('j'))
@@ -85,16 +75,6 @@ class VogelscheApproximationsmethode:
     def iteration(self):
         return self.iterationHelper(generateIndexGrid(self.matrix.shape), erg= np.zeros(self.matrix.shape), originalMatrix=self.matrix)
 
-
-    def lastIteration(self):
-        if np.shape(self.matrix)[1] == 1:
-            for i in range(len(self.angebot)):
-                self.matrix[i][0] = max(self.angebot[i], self.nachfrage[0]) - min(self.angebot[i], self.nachfrage[0])
-
-        if np.shape(self.matrix)[0] == 1:
-            for i in range(len(self.nachfrage)):
-                self.matrix[0][i] = max(self.angebot[0], self.nachfrage[i]) - min(self.angebot[0], self.nachfrage[i])
-
 def generateIndexGrid(shape):
     matrix= np.zeros(shape)
     for i in range(matrix.shape[0]):
@@ -103,11 +83,15 @@ def generateIndexGrid(shape):
             matrix[i][j]=matrix[i][j]
     return matrix
 
-
-
 def find_nth_smallest(a, n):
     return np.partition(a, n - 1)[n - 1]
 
+def calculateGesamtkosten(originalMatrix, erg):
+    print(f'erg Matrix:')
+    print(erg)
+    print(f'Gesamtkosten:')
+    print(f'F={calculateGesamtkosten(originalMatrix, erg)}')
+    return np.matmul(originalMatrix,erg.T).diagonal().sum()
 
 if __name__ == '__main__':
     matrix = np.array([[150, 30, 110], [80, 140, 100]])
