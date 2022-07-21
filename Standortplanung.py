@@ -24,6 +24,7 @@ class Standortplanung:
     ## Das wird für genau das selbe wie in der Altklausur benutzt
     ## w_ih + w_jk - x_ijhk <= 1 i,j|j > i; h,k|k != h
     def nebenbedingungen(self, I, H):
+        print('nebenbedingungen:')
         return ((I - 1) * (I) / 2) * H * (H - 1)
 
 

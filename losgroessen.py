@@ -17,11 +17,8 @@ class CLSP:
     def __call__(self, time_step):
         raise Exception
 
-    def produzierte_menge(self, time_step):
-        if time_step <= 0:
-            raise Exception("Timestep muss mindestens 1 sein")
-        print(self.q)
-        return self.q[time_step - 1]
+    def produzierte_menge(self):
+        print(f' Q´s: {self.q}')
 
     def lagerbestand(self):
         timesteps = self.demand.shape[0]
@@ -33,19 +30,19 @@ class CLSP:
         return lagerbestand
 
 
-
 def main():
-    demand = np.array([20, 20, 20, 15, 15])
+    demand = np.array([640, 515, 485, 379, 266, 350])
     matrix = np.array([
-        [1, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0],
-        [0, 0, 1, 1, 1],
-        [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0],
+        [1, 0.5, 0, 0, 0, 0],
+        [0, 0.5, 1, 0.3, 0, 0],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0.7, 1, 0.5],
+        [0, 0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0, 0.5],
     ])
     clsp = CLSP(demand, matrix)
-    print(clsp.produzierte_menge(4))
-    print(clsp.lagerbestand())
+    clsp.produzierte_menge()
+    print(f' I´s: {clsp.lagerbestand()}')
 
 
 if __name__ == '__main__':

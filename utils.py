@@ -1,7 +1,7 @@
 import numpy
 import numpy as np
 
-nachkommaStellen = 4
+nachkommaStellen = 2
 zwischenergebnisRunden = False
 
 def runden(x, zwischenergebnis = False):
