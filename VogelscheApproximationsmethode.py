@@ -31,7 +31,6 @@ class VogelscheApproximationsmethode:
             for i in range(len(self.nachfrage)):
                 erg[int(str(grid[i][0]).split('.')[0])][int(str(grid[i][0]).split('.')[1])]=min(self.angebot[0], self.nachfrage[i])
             calculateGesamtkosten(originalMatrix, erg)
-
         else:
             argmaxDeltaI = np.argmax(self.calculateDelt('i'))
             argmaxDeltaJ = np.argmax(self.calculateDelt('j'))
@@ -56,7 +55,10 @@ class VogelscheApproximationsmethode:
                 self.nachfrage[nachfragePivotElementIndex] = nachfragePivotElement
 
                 print(f'PivotElement: {self.matrix[pivotElementRow][pivotElementColumn]}, Index {round(grid[pivotElementRow][pivotElementColumn]+1.1,2)}')
-                erg[pivotElementRow][pivotElementColumn]=self.angebot[angebotPivotElementIndex]
+
+                realX=int(str(grid[pivotElementRow][pivotElementColumn]).split('.')[0])
+                realY=int(str(grid[pivotElementRow][pivotElementColumn]).split('.')[1])
+                erg[realX][realY]=self.angebot[angebotPivotElementIndex]
 
                 self.angebot = np.delete(self.angebot,angebotPivotElementIndex)
                 self.matrix = np.delete(self.matrix,angebotPivotElementIndex, 0)
@@ -66,7 +68,9 @@ class VogelscheApproximationsmethode:
                 angebotPivotElement = angebotPivotElement - nachfragePivotElement
                 self.angebot[angebotPivotElementIndex] = angebotPivotElement
                 print(f'PivotElement: {self.matrix[pivotElementRow][pivotElementColumn]}, Index {round(grid[pivotElementRow][pivotElementColumn]+1.1,2)}')
-                erg[pivotElementRow][pivotElementColumn] = self.nachfrage[nachfragePivotElementIndex]
+                realX = int(str(grid[pivotElementRow][pivotElementColumn]).split('.')[0])
+                realY = int(str(grid[pivotElementRow][pivotElementColumn]).split('.')[1])
+                erg[realX][realY] = self.nachfrage[nachfragePivotElementIndex]
                 self.nachfrage = np.delete(self.nachfrage, nachfragePivotElementIndex)
                 self.matrix = np.delete(self.matrix, nachfragePivotElementIndex, 1)
                 grid = np.delete(grid, nachfragePivotElementIndex, 1)
@@ -90,13 +94,14 @@ def calculateGesamtkosten(originalMatrix, erg):
     print(f'erg Matrix:')
     print(erg)
     print(f'Gesamtkosten:')
-    print(f'F={calculateGesamtkosten(originalMatrix, erg)}')
-    return np.matmul(originalMatrix,erg.T).diagonal().sum()
+    endErg = np.matmul(originalMatrix,erg.T).diagonal().sum()
+    print(f'F={endErg}')
+    return endErg
 
 if __name__ == '__main__':
-    matrix = np.array([[150, 30, 110], [80, 140, 100]])
-    angebot = np.array([15, 15])
-    nachfrage = np.array([13, 11, 6])
+    matrix = np.array([[18,16,12,20],[14,18,24,26],[10,28,18,32]])
+    angebot = np.array([70,100,80])
+    nachfrage = np.array([60,90,40,60])
     vogelscheApproximationsmethode = VogelscheApproximationsmethode(matrix, angebot, nachfrage)
     vogelscheApproximationsmethode.iteration()
 
