@@ -1,5 +1,7 @@
 import numpy as np
 
+from utils import runden
+
 
 class savingsAlgorithmus:
 
@@ -8,13 +10,14 @@ class savingsAlgorithmus:
 
     def savingsMatrix(self):
         savingsMatrix = np.zeros((self.distMatrix.shape[0] - 1, self.distMatrix.shape[1] - 1))
-        for row in range(self.distMatrix.shape[0]):
-            for column in range(self.distMatrix.shape[1]):
-                if 0 < row != column and column > 0:
-                    savingsMatrix[row - 1][column - 1] = self.distMatrix[0][row] + self.distMatrix[0][column] - \
-                                                         self.distMatrix[row][column]
+        for row in range(1,self.distMatrix.shape[0]):
+            for column in range(1, self.distMatrix.shape[1]):
+                if column != row:
+                    savingsMatrix[row - 1][column - 1] = runden(self.distMatrix[0][row] + self.distMatrix[0][column] - \
+                                                         self.distMatrix[row][column])
         print(f'der größte savingswert ist : {np.max(savingsMatrix)}')
         return savingsMatrix
+
 
 
 if __name__ == '__main__':
