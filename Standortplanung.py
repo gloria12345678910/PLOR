@@ -1,25 +1,31 @@
 import numpy as np
 
+
 class Standortplanung:
 
-    def __init__(self, d, t):
-        self.d = d
+    def __init__(self):
+        pass
+
+    def standortplanung(self, d, t):
         if t.shape[0] != t.shape[1] or len(t.shape) > 2:
             raise Exception("Gib halt richtig ein")
-        self.t = t
+        regionen_cnt = d.shape[0]
+        lager_cnt = d.shape[1]
 
-    def standortplanung(self):
-        regionen_cnt = self.d.shape[0]
-        lager_cnt = self.d.shape[1]
-
-        c = np.zeros(self.d.shape)
+        c = np.zeros(d.shape)
         for rowIdx in range(regionen_cnt):
             for colIdx in range(lager_cnt):
                 sum = 0
                 for region in range(regionen_cnt):
-                    sum += self.t[rowIdx, region] + self.t[region, rowIdx]
-                c[rowIdx, colIdx] = self.d[rowIdx, colIdx] * sum
-        print(c)
+                    sum += t[rowIdx, region] + t[region, rowIdx]
+                c[rowIdx, colIdx] = d[rowIdx, colIdx] * sum
+        return c
+
+    ## Das wird für genau das selbe wie in der Altklausur benutzt
+    ## w_ih + w_jk - x_ijhk <= 1 i,j|j > i; h,k|k != h
+    def nebenbedingungen(self, I, H):
+        return ((I - 1) * (I) / 2) * H * (H - 1)
+
 
 def main():
     d = np.array([
@@ -41,8 +47,10 @@ def main():
         [25, 18, 24, 39, 25, 0, 69],
         [35, 76, 71, 29, 83, 41, 0]
     ])
-    sop = Standortplanung(d, t)
-    print(sop.standortplanung())
+    sop = Standortplanung()
+    print(sop.standortplanung(d, t))
+    print(sop.nebenbedingungen(10,5))
+
 
 if __name__ == '__main__':
     main()
