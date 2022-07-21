@@ -3,15 +3,14 @@ import numpy as np
 
 class savingsAlgorithmus:
 
-    def __init__(self, distMatrix, i=0):
+    def __init__(self, distMatrix):
         self.distMatrix = distMatrix
-        self.i = i
 
     def savingsMatrix(self):
         savingsMatrix = np.zeros((self.distMatrix.shape[0] - 1, self.distMatrix.shape[1] - 1))
         for row in range(self.distMatrix.shape[0]):
             for column in range(self.distMatrix.shape[1]):
-                if row > 0 and column > 0 and column != row:
+                if 0 < row != column and column > 0:
                     savingsMatrix[row - 1][column - 1] = self.distMatrix[0][row] + self.distMatrix[0][column] - \
                                                          self.distMatrix[row][column]
         print(f'der größte savingswert ist : {np.max(savingsMatrix)}')
