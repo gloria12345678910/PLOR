@@ -46,17 +46,22 @@ class MODI:
         for rowIndex in range(self.transportkostenSaetze.shape[0]):
             for columnIndex in range(self.transportkostenSaetze.shape[1]):
                 if np.isnan(self.startloesung[rowIndex][columnIndex]):
-                    self.startloesung[rowIndex][columnIndex]= self.transportkostenSaetze[rowIndex][columnIndex]-self.v[columnIndex]-self.u[columnIndex]
+                    self.startloesung[rowIndex][columnIndex] = self.transportkostenSaetze[rowIndex][columnIndex]-self.v[columnIndex]-self.u[rowIndex]
 
+    def printItOut(self):
+        print(f'u: {self.u}')
+        print(f'v: {self.v}')
+        print(f'Lösung:')
+        print(self.startloesung)
 
 if __name__ == '__main__':
-    transportkostenSaetze = [[150,30,110],
-                             [80,140,100]]
-    startloesung = [[np.nan, 11, 4],
-                    [13, np.nan, 2]]
+    transportkostenSaetze = [[44,74,66,29],
+                             [38,53,49,75],
+                             [67,50,23,55]]
+    startloesung = [[np.nan, 77, 80, np.nan],
+                    [np.nan,54, np.nan, 32],
+                    [26, np.nan, np.nan, 40]]
 
     x = MODI(transportkostenSaetze,startloesung)
     x.calculateOpportunitaetskostensaetze()
-    print(x.u)
-    print(x.v)
-    print( x.startloesung)
+    x.printItOut()
